@@ -1,1 +1,7 @@
 terraform/.terraform
+plan.tf
+*.tfstate
+*.tfplan
+*.tfstate
+*.idea
+*.tfstate.backup

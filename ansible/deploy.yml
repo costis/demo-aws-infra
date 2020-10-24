@@ -1,0 +1,48 @@
+---
+- hosts: appserver
+  become: false
+  vars_files:
+    - vars/default.yml
+    - vars/jumphost.yml
+  tasks:
+    - name: get current sha
+      local_action: shell git rev-parse HEAD
+      register: git
+
+    # - name: debug
+    #   debug:
+    #     msg: '{{ git.stdout }}'
+    #
+
+    - name: Pull default Docker image
+      docker_image:
+        name: "{{ default_container_image }}:{{ git.stdout }}"
+        source: pull
+
+    - name: migrate db
+      community.general.docker_container:
+        name: "db-migrate-{{ git.stdout }}"
+        image: "{{ default_container_image }}:{{ git.stdout }}"
+        command: "rake db:migrate"
+        state: started
+        cleanup: "yes"
+        runonce: true
+        env:
+          RAILS_ENV: production
+          DATABASE_URL: "postgres://stimulus:mypassword@{{ db_ip }}/stimulus_reflex"
+          SECRET_KEY_BASE: foo
+
+    - name: Create default containers
+      community.general.docker_container:
+        name: "{{ default_container_name }}"
+        image: "{{ default_container_image }}:{{ git.stdout }}"
+        # command: "rake db:prepare"
+        exposed_ports: 3000
+        published_ports: 0.0.0.0:8080:3000
+        state: started
+        env:
+          RAILS_ENV: production
+          DATABASE_URL: "postgres://stimulus:mypassword@{{ db_ip }}/stimulus_reflex"
+          SECRET_KEY_BASE: foo
+          RAILS_SERVE_STATIC_FILES: "true"
+

@@ -1,0 +1,15 @@
+<%= content_for :demo_title, "Reverse Text" %>
+<%= content_for :demo_summary, "Prints whatever you type in reverse order" %>
+<%= render_demo "/reverse_texts/demo" %>
+
+<%= render_explanation do %>
+  <p>
+    <strong>No custom JavaScript was written for this demo.</strong>
+    It uses the <code>data-reflex</code> attributes to produce the behavior.
+  </p>
+<% end %>
+
+<%= render_gists(
+  "app/views/reverse_texts/_demo.html.erb",
+  "app/reflexes/reverse_text_reflex.rb"
+) %>

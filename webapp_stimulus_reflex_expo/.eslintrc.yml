@@ -1,0 +1,6 @@
+globals:
+  alert: readonly
+  location: readonly
+  performance: readonly
+  Chartkick: readonly
+  history: readonly

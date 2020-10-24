@@ -1,0 +1,18 @@
+---
+- hosts: bastion
+  become: true
+  vars_files:
+    - vars/default.yml
+
+  tasks:
+    - name: Install aptitude using apt
+      apt: name=aptitude state=latest update_cache=yes force_apt_get=yes
+
+    - name: Install required system packages
+      apt: name={{ item }} state=latest update_cache=yes
+      loop: [ 'libpq-dev', 'dnsutils', 'curl', 'net-tools', 'netcat', 'python3-pip', 'postgresql-client']
+
+    - name: install python module requred for playbook community.general.postgresql_*
+      pip:
+        name: psycopg2
+

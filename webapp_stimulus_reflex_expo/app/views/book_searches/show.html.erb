@@ -1,0 +1,18 @@
+<%= content_for :demo_title, "Book Search" %>
+<%= content_for :demo_summary, "<a href='https://openlibrary.org/developers/api'>https://openlibrary.org/developers/api</a>".html_safe %>
+<%= render_demo "/book_searches/demo" %>
+
+<%= render_explanation do %>
+  <p>
+    This demo illustrates the power of combining <a href="https://stimulusjs.org" target="_blank">Stimulus</a> with StimulusReflex.
+    It leverages Stimulus to <strong>provide feedback</strong>.
+    We debounce with with the prefix <code>debounced:</code> provided by a <a href="https://github.com/hopsoft/debounced">npm package</a>
+    <em>(so we don't <a href="https://en.wikipedia.org/wiki/Denial-of-service_attack" target="_blank">DOS</a> the API)</em>.
+  </p>
+<% end %>
+
+<%= render_gists(
+  "app/views/book_searches/_demo.html.erb",
+  "app/javascript/controllers/book_search_controller.js",
+  "app/reflexes/book_search_reflex.rb"
+) %>

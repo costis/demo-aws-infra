@@ -1,0 +1,37 @@
+---
+- hosts: bastion
+  become: false
+  vars_files:
+    - vars/jumphost.yml 
+  tasks:
+    - name: Create a new database with name 'stimulus_reflex'
+      community.general.postgresql_db:
+        name: stimulus_reflex
+        login_host: "{{ db_ip }}"
+        login_password: "{{ db_admin_password }}"
+        login_user: "{{ db_admin_username }}"
+
+    - name: create db user
+      community.general.postgresql_user:
+        db: 'stimulus_reflex'
+        login_host: '{{ db_ip }}'
+        login_password: '{{ db_admin_password }}'
+        login_user: '{{ db_admin_username }}'
+        user: stimulus
+        password: mypassword
+        priv: 'ALL'
+      environment:
+        PGOPTIONS: "-c password_encryption=scram-sha-256"
+
+
+
+    # - name: GRANT ALL PRIVILEGES ON DATABASE stimulus_reflex TO user stimulus
+    #   community.general.postgresql_privs:
+    #     login_host:"{{ db_ip }}" 
+    #     login_password:"{{ db_admin_password }}"
+    #     login_user:"{{ db_admin_username }}"
+    #     db:"stimulus_reflex"
+    #     privs:ALL
+    #     type:"database"
+    #     role:"stimulus"
+    #

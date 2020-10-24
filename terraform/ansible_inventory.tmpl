@@ -1,0 +1,9 @@
+[bastion]
+bastion ansible_host=${bastion-ip}
+
+[appserver]
+web_a ansible_host=${web_a-ip}
+web_b ansible_host=${web_b-ip}
+
+[migration]
+migration ansible_host=${web_a-ip}

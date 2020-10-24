@@ -1,0 +1,29 @@
+---
+- hosts: appserver
+  become: false
+  vars_files:
+    - vars/default.yml
+    - vars/jumphost.yml
+  tasks:
+    - name: get current sha
+      local_action: shell git rev-parse HEAD
+      register: git
+
+    - name: Pull default Docker image
+      docker_image:
+        name: "{{ default_container_image }}:{{ git.stdout }}"
+        source: pull
+
+    - name: prepare db
+      community.general.docker_container:
+        name: "db-prepare-{{ git.stdout }}"
+        image: "{{ default_container_image }}:{{ git.stdout }}"
+        command: "rake db:prepare"
+        state: started
+        cleanup: "yes"
+        runonce: true
+        env:
+          RAILS_ENV: production
+          DATABASE_URL: "postgres://stimulus:mypassword@{{ db_ip }}/stimulus_reflex"
+          SECRET_KEY_BASE: foo
+

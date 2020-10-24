@@ -1,0 +1,84 @@
+.opacity-0 {
+  opacity: 0 !important;
+}
+.opacity-10 {
+  opacity: 0.1 !important;
+}
+.opacity-20 {
+  opacity: 0.2 !important;
+}
+.opacity-30 {
+  opacity: 0.3 !important;
+}
+.opacity-40 {
+  opacity: 0.4 !important;
+}
+.opacity-50 {
+  opacity: 0.5 !important;
+}
+.opacity-60 {
+  opacity: 0.6 !important;
+}
+.opacity-70 {
+  opacity: 0.7 !important;
+}
+.opacity-80 {
+  opacity: 0.8 !important;
+}
+.opacity-90 {
+  opacity: 0.9 !important;
+}
+.opacity-100 {
+  opacity: 1 !important;
+}
+
+.scale-up-micro {
+  transform: scale(1.005);
+}
+
+@each $color, $value in $theme-colors {
+  .bg-#{$color}-light {
+    background-color: lighten($value, 35%) !important;
+  }
+
+  .bg-#{$color}-lighter {
+    background-color: lighten($value, 42%) !important;
+  }
+
+  .bg-#{$color}-lightest {
+    background-color: lighten($value, 48%) !important;
+  }
+
+  .border-#{$color}-light {
+    border-color: lighten($value, 20%) !important;
+  }
+
+  .border-#{$color}-lighter {
+    border-color: lighten($value, 30%) !important;
+  }
+
+  .border-#{$color}-dark {
+    border-color: darken($value, 20%) !important;
+  }
+
+  .bg-#{$color}-dark {
+    background-color: darken($value, 20%) !important;
+  }
+
+  .text-#{$color}-dark {
+    color: darken($value, 20%) !important;
+  }
+}
+
+.main {
+  height: calc(100% - 52px);
+  padding-top: 60px;
+}
+
+.sidenav-height {
+  min-height: calc(100vh - 60px);
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, .35);
+}

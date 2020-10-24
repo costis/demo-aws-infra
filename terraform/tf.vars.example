@@ -1,0 +1,4 @@
+db_username = <example-username>
+db_password = <example-password>
+ssh_public_key = "ssh-rsa your-public-key-goes-here"
+

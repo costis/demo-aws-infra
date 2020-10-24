@@ -1,0 +1,4 @@
+#!/bin/bash
+
+bundle exec standardrb --fix --format progress
+yarn run prettier-standard --lint app/javascript/**/*.js

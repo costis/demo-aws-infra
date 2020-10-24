@@ -1,0 +1,6 @@
+[bastion]
+bastion ansible_host=18.134.223.121
+
+[appserver]
+web_a ansible_host=172.20.42.176
+web_b ansible_host=172.20.51.48
